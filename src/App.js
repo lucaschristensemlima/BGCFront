@@ -34,7 +34,8 @@ export default function App() {
     userHasAuthenticated(false);
   }
 
-  return ( 
+  return (
+    !isAuthenticating &&
     <div className="App container">
       <Navbar fluid collapseOnSelect>
         <Navbar.Header>
@@ -45,23 +46,25 @@ export default function App() {
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav pullRight>
-          {isAuthenticated
-          ? <NavItem onClick={handleLogout}>Logout</NavItem>
-          : <>
-              <LinkContainer to="/signup">
-                <NavItem>Signup</NavItem>
-              </LinkContainer>
-              <LinkContainer to="/login">
-                <NavItem>Login</NavItem>
-              </LinkContainer>
-            </>
-          }
+            {isAuthenticated
+              ? <NavItem onClick={handleLogout}>Logout</NavItem>
+              : <>
+                  <LinkContainer to="/signup">
+                    <NavItem>Signup</NavItem>
+                  </LinkContainer>
+                  <LinkContainer to="/login">
+                    <NavItem>Login</NavItem>
+                  </LinkContainer>
+                </>
+            }
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-      <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
-  <Routes />
-</AppContext.Provider>
+      <AppContext.Provider
+        value={{ isAuthenticated, userHasAuthenticated }}
+      >
+        <Routes />
+      </AppContext.Provider>
     </div>
   );
 }

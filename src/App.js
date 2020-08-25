@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Nav, Navbar, NavItem } from "react-bootstrap";
 import "./App.css";
 import Routes from "./Routes";
@@ -11,6 +10,7 @@ import React, { useState, useEffect } from "react";
 export default function App() {
   const [isAuthenticating, setIsAuthenticating] = useState(true);
   const [isAuthenticated, userHasAuthenticated] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     onLoad();
@@ -30,8 +30,12 @@ export default function App() {
     setIsAuthenticating(false);
   }
   
-  function handleLogout() {
+  async function handleLogout() {
+    await Auth.signOut();
+  
     userHasAuthenticated(false);
+
+    history.push("/login");
   }
 
   return (
@@ -40,7 +44,7 @@ export default function App() {
       <Navbar fluid collapseOnSelect>
         <Navbar.Header>
           <Navbar.Brand>
-            <Link to="/">Scratch</Link>
+            <Link to="/">Home</Link>
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
